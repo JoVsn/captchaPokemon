@@ -1,4 +1,4 @@
-package fr.upem.captcha;
+package fr.upem.captcha.images;
 
 import java.net.URL;
 import java.util.List;
