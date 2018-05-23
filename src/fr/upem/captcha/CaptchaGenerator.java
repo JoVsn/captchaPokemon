@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 import fr.upem.captcha.images.Category;
 
-public class GridManager {
-	Category categorie;
+public class CaptchaGenerator {
+	Category category;
 	ArrayList<URL> validList;
-	ArrayList<URL> invalidList;
+	ArrayList<URL> fullList;
 	
-	GridManager(Category categorie) {
-		this.categorie = categorie;
+	CaptchaGenerator(Category categorie) {
+		this.category = categorie;
 		this.validList = new ArrayList<URL>();
-		this.invalidList = new ArrayList<URL>();
+		this.fullList = new ArrayList<URL>();
 	}
 	
 	
