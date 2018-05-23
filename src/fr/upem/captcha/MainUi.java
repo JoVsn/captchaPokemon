@@ -21,26 +21,30 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+/**
+ * @author Alexane LE GUERN, Jordan VILSAINT
+ *
+ */
 public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	
 	public static void main(String[] args) throws IOException {
-		JFrame frame = new JFrame("Capcha"); // CrÃ©ation de la fenÃªtre principale
+		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 		
-		GridLayout layout = createLayout();  // CrÃ©ation d'un layout de type Grille avec 4 lignes et 3 colonnes
+		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 		
-		frame.setLayout(layout);  // affection du layout dans la fenÃªtre.
-		frame.setSize(1024, 768); // dÃ©finition de la taille
-		frame.setResizable(false);  // On dÃ©finit la fenÃªtre comme non redimentionnable
+		frame.setLayout(layout);  // affection du layout dans la fenêtre.
+		frame.setSize(1024, 768); // définition de la taille
+		frame.setResizable(false);  // On définit la fenêtre comme non redimentionnable
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenÃªtre on quitte le programme.
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
 		 
 		
 		JButton okButton = createOkButton();
 
-		
-		/*frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants Ã  la fenÃªtre
+		/*
+		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
 		frame.add(createLabelImage("le havre.jpg"));
 		frame.add(createLabelImage("panneau 70.jpg"));
 		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
@@ -48,8 +52,8 @@ public class MainUi {
 		frame.add(createLabelImage("route panneau.jpg"));
 		frame.add(createLabelImage("tour eiffel.jpg"));
 		frame.add(createLabelImage("ville espace verts.jpg"));
-		frame.add(createLabelImage("voie pieton.jpg"));*/
-		
+		frame.add(createLabelImage("voie pieton.jpg"));
+		*/
 		
 		
 		frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
@@ -70,7 +74,7 @@ public class MainUi {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des Ã©vÃ¨nements
+				EventQueue.invokeLater(new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des évènements
 					
 					@Override
 					public void run() { // c'est un runnable
@@ -90,9 +94,9 @@ public class MainUi {
 		BufferedImage img = ImageIO.read(url); //lire l'image
 		Image sImage = img.getScaledInstance(1024/3,768/4, Image.SCALE_SMOOTH); //redimentionner l'image
 		
-		final JLabel label = new JLabel(new ImageIcon(sImage)); // crÃ©er le composant pour ajouter l'image dans la fenÃªtre
+		final JLabel label = new JLabel(new ImageIcon(sImage)); // créer le composant pour ajouter l'image dans la fenêtre
 		
-		label.addMouseListener(new MouseListener() { //Ajouter le listener d'Ã©venement de souris
+		label.addMouseListener(new MouseListener() { //Ajouter le listener d'évenement de souris
 			private boolean isSelected = false;
 			
 			
@@ -116,7 +120,7 @@ public class MainUi {
 			}
 			
 			@Override
-			public void mouseClicked(MouseEvent arg0) { //ce qui nous intÃ©resse c'est lorsqu'on clique sur une image, il y a donc des choses Ã  faire ici
+			public void mouseClicked(MouseEvent arg0) { //ce qui nous intéresse c'est lorsqu'on clique sur une image, il y a donc des choses à faire ici
 				EventQueue.invokeLater(new Runnable() { 
 					
 					@Override
