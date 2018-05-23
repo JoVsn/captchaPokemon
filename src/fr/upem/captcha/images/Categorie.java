@@ -1,5 +1,6 @@
 package fr.upem.captcha.images;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,6 @@ public abstract class Categorie implements Images{
 
 	public List<URL> getPhotos() {
 		ArrayList<URL> newList = new ArrayList<URL>();
-		
 		return newList;
 	}
 	
@@ -24,9 +24,9 @@ public abstract class Categorie implements Images{
 			return newUrl;
 		}
 
-		catch(Exception e) {
+		catch(MalformedURLException e) {
 			System.out.println(e.getMessage());
-			return new URL("Test");
+			return null;
 		}
 	}
 	

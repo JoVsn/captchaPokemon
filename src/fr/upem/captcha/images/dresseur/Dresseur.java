@@ -1,5 +1,7 @@
 package fr.upem.captcha.images.dresseur;
 
-public class Dresseur {
+import fr.upem.captcha.images.Categorie;
+
+public class Dresseur extends Categorie {
 
 }
