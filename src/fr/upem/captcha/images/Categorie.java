@@ -48,6 +48,6 @@ public abstract class Categorie implements Images{
 	
 	public boolean isPhotoCorrect(URL url) {
 		String categorieName = this.getClass().getName().toLowerCase();
-		return true;
+		return url.toString().contains(categorieName);
 	}
 }
