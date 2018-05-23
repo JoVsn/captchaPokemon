@@ -10,5 +10,5 @@ import fr.upem.captcha.images.Category;
  *
  */
 public class Dresseur extends Category {
-	
+
 }

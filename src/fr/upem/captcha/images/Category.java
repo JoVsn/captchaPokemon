@@ -1,5 +1,6 @@
 package fr.upem.captcha.images;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -8,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -19,18 +21,30 @@ public abstract class Category implements Images{
 	public ArrayList<URL> getPhotos() {
 		ArrayList<URL> newList = new ArrayList<URL>();
 		
+		// On récupère le répertoire courant
 		String dirPath = this.getClass().getPackageName();
 		dirPath = dirPath.replace(".", "/");
+				
+		List<String> files = new ArrayList<String>();
 		
-		try (Stream<Path> paths = Files.walk(Paths.get("/" + dirPath))) {
-		    paths
-		        //.filter(Files::isRegularFile);
-		        .forEach(System.out::println);
+		try {
+			// On parcourt tous les fichiers du répertoire courant, mais aussi des sous-répertoires
+			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath));
+		    files = paths
+		    	.map(Path::toString)
+		        .filter(elem -> (elem.contains(".jpg") || elem.contains(".png"))) // On ne récupère que les images
+		        .collect(Collectors.toList());
+			
+		    // Enfin, on ajoute les images à notre liste d'images
+			for (String file: files) {
+				String[] tmpTab = file.split("\\\\");
+				String tmp = tmpTab[tmpTab.length-1];
+				newList.add(this.getClass().getResource(tmp));
+			}
 		} 
 		catch(IOException e) {
 			System.out.println("Erreur : " + e.getMessage());
 		}
-		
 		return newList;
 	}
 	
@@ -46,6 +60,7 @@ public abstract class Category implements Images{
 			throw new IllegalArgumentException("Le nombre d'images doit être compris entre 1 et " + photos.size());
 		}
 		
+		// On récupère un nombre d'images prises au hasard dans notre liste d'images
 		for (int i = 0; i < n; i++) {
 			int tmpIndex = randomno.nextInt(photos.size());
 			URL tmp = photos.get(tmpIndex);
@@ -64,6 +79,9 @@ public abstract class Category implements Images{
 		return newURL;
 	}
 	
+	/**
+	 * Précise si une photo appartient bien à notre catégorie
+	 */
 	public boolean isPhotoCorrect(URL url) {
 		String categorieName = this.getClass().getPackageName().toLowerCase();
 		return url.toString().toLowerCase().contains(categorieName);

@@ -32,9 +32,7 @@ public class MainUi {
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	
 	public static void main(String[] args) throws IOException {
-		Dresseur o = new Dresseur();
-		System.out.println(o.getClass().getPackageName());
-		o.getPhotos();
+		
 		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 		
 		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
@@ -48,18 +46,15 @@ public class MainUi {
 		
 		JButton okButton = createOkButton();
 
-		/*
-		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
-		frame.add(createLabelImage("le havre.jpg"));
-		frame.add(createLabelImage("panneau 70.jpg"));
-		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
-		frame.add(createLabelImage("parking.jpg"));
-		frame.add(createLabelImage("route panneau.jpg"));
-		frame.add(createLabelImage("tour eiffel.jpg"));
-		frame.add(createLabelImage("ville espace verts.jpg"));
-		frame.add(createLabelImage("voie pieton.jpg"));
-		*/
+		/* NE PAS SUPPRIMER CES LIGNES */
 		
+		Dresseur o = new Dresseur();
+		ArrayList<URL> list = o.getPhotos();
+		for (URL url: list) {
+			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
+		}
+		
+		/* NE PAS SUPPRIMER CES LIGNES */
 		
 		frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
 		
