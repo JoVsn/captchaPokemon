@@ -21,6 +21,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+/**
+ * @author Alexane LE GUERN, Jordan VILSAINT
+ *
+ */
 public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();

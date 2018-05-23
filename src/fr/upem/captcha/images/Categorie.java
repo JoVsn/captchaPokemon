@@ -5,6 +5,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Alexane LE GUERN, Jordan VILSAINT
+ *
+ */
 public abstract class Categorie implements Images{
 
 	public List<URL> getPhotos() {
