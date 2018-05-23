@@ -40,7 +40,7 @@ public class MainUi {
 		JButton okButton = createOkButton();
 
 		
-		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
+		/*frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
 		frame.add(createLabelImage("le havre.jpg"));
 		frame.add(createLabelImage("panneau 70.jpg"));
 		frame.add(createLabelImage("panneaubleu-carre.jpeg"));
@@ -48,11 +48,11 @@ public class MainUi {
 		frame.add(createLabelImage("route panneau.jpg"));
 		frame.add(createLabelImage("tour eiffel.jpg"));
 		frame.add(createLabelImage("ville espace verts.jpg"));
-		frame.add(createLabelImage("voie pieton.jpg"));
+		frame.add(createLabelImage("voie pieton.jpg"));*/
 		
 		
 		
-		frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
+		frame.add(new JTextArea("Cliquez n'importe o� ... juste pour tester l'interface !"));
 		
 		
 		frame.add(okButton);
@@ -66,7 +66,7 @@ public class MainUi {
 	}
 	
 	private static JButton createOkButton(){
-		return new JButton(new AbstractAction("Vérifier") { //ajouter l'action du bouton
+		return new JButton(new AbstractAction("V�rifier") { //ajouter l'action du bouton
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -74,7 +74,7 @@ public class MainUi {
 					
 					@Override
 					public void run() { // c'est un runnable
-						System.out.println("J'ai cliqué sur Ok");
+						System.out.println("J'ai cliqu� sur Ok");
 					}
 				});
 			}
