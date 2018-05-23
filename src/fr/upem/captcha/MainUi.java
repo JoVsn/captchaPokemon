@@ -21,6 +21,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import  fr.upem.captcha.images.dresseur.Dresseur;
+
 /**
  * @author Alexane LE GUERN, Jordan VILSAINT
  *
@@ -30,6 +32,9 @@ public class MainUi {
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	
 	public static void main(String[] args) throws IOException {
+		Dresseur o = new Dresseur();
+		System.out.println(o.getClass().getPackageName());
+		o.getPhotos();
 		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 		
 		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes

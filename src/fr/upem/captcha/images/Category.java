@@ -1,19 +1,37 @@
 package fr.upem.captcha.images;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  * @author Alexane LE GUERN, Jordan VILSAINT
  *
  */
-public abstract class Categorie implements Images{
+public abstract class Category implements Images{
 
 	public ArrayList<URL> getPhotos() {
-		return null;
+		ArrayList<URL> newList = new ArrayList<URL>();
+		
+		String dirPath = this.getClass().getPackageName();
+		dirPath = dirPath.replace(".", "/");
+		
+		try (Stream<Path> paths = Files.walk(Paths.get("/" + dirPath))) {
+		    paths
+		        //.filter(Files::isRegularFile);
+		        .forEach(System.out::println);
+		} 
+		catch(IOException e) {
+			System.out.println("Erreur : " + e.getMessage());
+		}
+		
+		return newList;
 	}
 	
 	/**
@@ -47,7 +65,7 @@ public abstract class Categorie implements Images{
 	}
 	
 	public boolean isPhotoCorrect(URL url) {
-		String categorieName = this.getClass().getName().toLowerCase();
-		return url.toString().contains(categorieName);
+		String categorieName = this.getClass().getPackageName().toLowerCase();
+		return url.toString().toLowerCase().contains(categorieName);
 	}
 }
