@@ -43,7 +43,7 @@ public class MainUi {
 		
 		JButton okButton = createOkButton();
 
-		
+		/*
 		frame.add(createLabelImage("centre ville.jpg")); //ajouter des composants à la fenêtre
 		frame.add(createLabelImage("le havre.jpg"));
 		frame.add(createLabelImage("panneau 70.jpg"));
@@ -53,7 +53,7 @@ public class MainUi {
 		frame.add(createLabelImage("tour eiffel.jpg"));
 		frame.add(createLabelImage("ville espace verts.jpg"));
 		frame.add(createLabelImage("voie pieton.jpg"));
-		
+		*/
 		
 		
 		frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
