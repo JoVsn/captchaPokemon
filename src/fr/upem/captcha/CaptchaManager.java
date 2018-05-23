@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 import fr.upem.captcha.images.Category;
 
-public class CaptchaGenerator {
+public class CaptchaManager {
 	Category category;
 	ArrayList<URL> validList;
 	ArrayList<URL> fullList;
 	
-	CaptchaGenerator(Category categorie) {
-		this.category = categorie;
+	CaptchaManager(Category category) {
+		this.category = category;
 		this.validList = new ArrayList<URL>();
 		this.fullList = new ArrayList<URL>();
 	}
