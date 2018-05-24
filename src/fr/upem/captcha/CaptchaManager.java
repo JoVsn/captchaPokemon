@@ -7,15 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import fr.upem.captcha.images.Category;
 import fr.upem.captcha.images.Images;
 
 /**
@@ -28,8 +25,7 @@ public class CaptchaManager {
 	private List<URL> validList;
 	private List<URL> fullList;
 	private int maxImg = 9;
-	private int difficulty = 3;
-	
+	private int difficulty = 2;
 	
 	CaptchaManager() {
 		this.validList = new ArrayList<URL>();
@@ -61,7 +57,7 @@ public class CaptchaManager {
 		
 		ArrayList<String> categoriesName = new ArrayList<String>();
 		List<String> filesPaths = new ArrayList<String>();
-		List<Class> classList = new ArrayList<Class>();
+		List<Class<?>> classList = new ArrayList<Class<?>>();
 		
 		try {
 			// On parcourt tous les fichiers du répertoire courant, mais aussi des sous-répertoires
@@ -70,24 +66,27 @@ public class CaptchaManager {
 		    		.map(Path::toString)
 		    		.filter(elem -> elem.contains(basePath))
 		    		.collect(Collectors.toList());
+		    paths.close();
 		    
 		    for (String path: filesPaths) {
 		    	File tmp = new File(path);
 		    	if (tmp.isDirectory()) {
+		    		// On enlève les partie qui servent à rien et formate l'URL de la bonne forme
 		    		path = path.replace("\\", ".").replace("..src.", "");
 		    		String[] pathElems = path.split("\\.");
 		    		
+		    		// On crée le nom de la classe complet
 		    		String className = pathElems[pathElems.length-1];
 		    		className = className.substring(0, 1).toUpperCase() + className.substring(1);
 		    		path += "." + className;
-		    		System.out.println(path);
 		    		categoriesName.add(path);
 		    	}
 		    }
 		    
+		    // On crée une liste de classe
 		    for (String className: categoriesName) {
 		    	try {
-		    		Class newClass = Class.forName(className);
+		    		Class<?> newClass = Class.forName(className);
 		    		classList.add(newClass);
 		    	}
 		    	catch(ClassNotFoundException e) {
@@ -95,6 +94,7 @@ public class CaptchaManager {
 		    	}
 		    }
 		    
+		    // Pour chaque classe, on crée une instance de celle-ci que l'on stocke dans notre liste de catégories
 		    for (Class<?> cls: classList) {
 		    	Class<?> tmp = Class.forName(cls.getTypeName());
 		    	Object category = tmp.newInstance();
@@ -140,7 +140,7 @@ public class CaptchaManager {
 	}
 	
 	/**
-	 * Fills the valid list randomly
+	 * Fills the valid list of images randomly
 	 */
 	public void fillValidList() {
 		Random randomno = new Random();
@@ -154,24 +154,22 @@ public class CaptchaManager {
 		}
 	}
 	
+	/**
+	 * Fills the reste of the list of images
+	 */
 	public void fillFullList() {
 		// On ajoute la liste d'éléments valides à la liste complète
 		for (int i = 0; i < validList.size(); i++) {
 			fullList.add(validList.get(i));
 		}
 		
-		// On récupère toutes les autres catégories
+		// On récupère toutes les autres catégories, attention il ne faut pas récupérer les catégories filles de celle en cours, on a déjà ses images
 		List<Images> otherCategories = new ArrayList<Images>();
 		for(Images i: allCategories) {
 			boolean contains = i.getClass().getPackage().getName().contains(category.getClass().getPackage().getName());
 			boolean equals = i.getClass().getPackage().getName().equals(category.getClass().getPackage().getName());
 			if (!equals && !contains) {
 				otherCategories.add(i);
-				System.out.println("/////////");
-				System.out.println("Autre catégorie: " + i.getClass().getSimpleName());
-				System.out.println(i.getClass().getPackage().getName());
-				System.out.println(category.getClass().getPackage().getName());
-				System.out.println("/////////");
 			}
 		}
 		
@@ -182,12 +180,18 @@ public class CaptchaManager {
 			int tmpIndex = randomno.nextInt(otherCategories.size());
 			Images tmpCategory = otherCategories.get(tmpIndex);
 			URL newUrl = tmpCategory.getRandomPhotoURL();
-			if (!fullList.contains(newUrl)) {
+			// Précaution pour qu'une image ne soit pas ajoutée sous prétexte qu'elle fasse partie de la catégorie "mère"
+			if (!fullList.contains(newUrl) && !category.isPhotoCorrect(newUrl)) {
 				fullList.add(newUrl);
 				j++;
 			}
 		}
+		// Mélange de la liste d'images
 		Collections.shuffle(fullList);
+	}
+	
+	public void increaseDifficulty() {
+		difficulty++;
 	}
 	
 	/**
@@ -199,7 +203,7 @@ public class CaptchaManager {
 	}
 
 	/**
-	 * Get the valid list
+	 * Get the valid list of images
 	 * @return List<URL>
 	 */
 	public List<URL> getValidList() {
@@ -207,7 +211,7 @@ public class CaptchaManager {
 	}
 
 	/**
-	 * Get the full list
+	 * Get the full list of images
 	 * @return List<URL>
 	 */
 	public List<URL> getFullList() {

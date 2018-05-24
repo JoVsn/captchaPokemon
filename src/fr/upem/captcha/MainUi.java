@@ -23,9 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
-import  fr.upem.captcha.images.dresseur.Dresseur;
-import fr.upem.captcha.images.pokemon.Pokemon;
-
 /**
  * @author Alexane LE GUERN, Jordan VILSAINT
  *
@@ -50,21 +47,11 @@ public class MainUi {
 		
 		JButton okButton = createOkButton();
 
-		/* NE PAS SUPPRIMER CES LIGNES */
-		
-		Pokemon pok = new Pokemon();
-		pok.getPhotos();
-
-		
-		//CaptchaManager cm = new CaptchaManager();
-				
+		// Récupération des données et création du Captcha
 		List<URL> list = captchaManager.getFullList();
-		//List<URL> list = captchaManager.getValidList();
 		for (URL url: list) {
 			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
-		}	
-		
-		/* NE PAS SUPPRIMER CES LIGNES */
+		}
 		
 		//frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
 		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : " + captchaManager.getCategory().getClass().getSimpleName()));
