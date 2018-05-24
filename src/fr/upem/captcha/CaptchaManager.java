@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -45,6 +47,13 @@ public class CaptchaManager {
 		}
 	}
 	
+	/**
+	 * Fills the categories by browsing through the folders
+	 * @param int difficulty
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public void fillCategories(int difficulty) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		String dirPath = this.getClass().getPackage().getName();
 		dirPath = dirPath.replace(".", "/");
@@ -96,9 +105,10 @@ public class CaptchaManager {
 			System.out.println("Erreur : " + e.getMessage());
 		}
 	}
+	
 	/**
-	 * Compare deux listes de même taille
-	 * @param selectedImages
+	 * Compares two Array lists of the same size
+	 * @param ArrayList<URL> selectedImages
 	 * @return boolean
 	 */
 	public boolean compareLists(ArrayList<URL> selectedImages) {
@@ -114,6 +124,9 @@ public class CaptchaManager {
 		return ctrl;
 	}
 
+	/**
+	 * Chooses a category randomly
+	 */
 	public void chooseCategory() {
 		int nbCategories = allCategories.size();
 		if (nbCategories >= 2) {
@@ -126,9 +139,12 @@ public class CaptchaManager {
 		}
 	}
 	
+	/**
+	 * Fills the valid list randomly
+	 */
 	public void fillValidList() {
 		Random randomno = new Random();
-		int nbImagesOk = randomno.nextInt(3) + 1; // On sélectionne entre 1 et 3 images
+		int nbImagesOk = randomno.nextInt(4) + 1; // On sélectionne entre 1 et 3 images
 
 		try {
 			validList = category.getRandomPhotosURL(nbImagesOk);
@@ -163,25 +179,38 @@ public class CaptchaManager {
 				j++;
 			}
 		}
+		Collections.shuffle(fullList);
 	}
 	
+	/**
+	 * Get the category
+	 * @return Images
+	 */
 	public Images getCategory() {
 		return category;
 	}
 
+	/**
+	 * Get the valid list
+	 * @return List<URL>
+	 */
 	public List<URL> getValidList() {
 		return validList;
 	}
 
+	/**
+	 * Get the full list
+	 * @return List<URL>
+	 */
 	public List<URL> getFullList() {
 		return fullList;
 	}
 
+	/**
+	 * Get all categories
+	 * @return List<Images>
+	 */
 	public List<Images> getAllCategories() {
 		return allCategories;
-	}
-	
-	
-	
-	
+	}	
 }
