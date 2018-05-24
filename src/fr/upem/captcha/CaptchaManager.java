@@ -103,6 +103,7 @@ public class CaptchaManager {
 	public boolean compareLists(ArrayList<URL> selectedImages) {
 		boolean ctrl = false;
 		for (int i = 0; i < this.validList.size(); ++i) {
+			System.out.println(this.validList.get(i));
 			if (selectedImages.contains(this.validList.get(i))) {
 				ctrl = true;
 			} else {
