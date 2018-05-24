@@ -25,6 +25,8 @@ public class CaptchaManager {
 	private List<Images> allCategories;
 	private List<URL> validList;
 	private List<URL> fullList;
+	private int maxImg = 9;
+	private int difficulty = 2;
 	
 	
 	CaptchaManager() {
@@ -33,7 +35,7 @@ public class CaptchaManager {
 		this.allCategories = new ArrayList<Images>();
 		
 		try {
-			fillCategories(2);
+			fillCategories(difficulty);
 			chooseCategory();
 			fillValidList();
 		}
@@ -132,7 +134,18 @@ public class CaptchaManager {
 		catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
-		
+	}
+	
+	public void fillFullList() {
+		for (int i = 0; i < validList.size(); i++) {
+			fullList.add(validList.get(i));
+		}
+		int j = fullList.size();
+		Random randomno = new Random();
+		while (j < maxImg) {
+			int tmpIndex = randomno.nextInt(allCategories.size()-1);
+			Images tmpCategory = allCategories.get(tmpIndex);
+		}
 	}
 	
 	public Images getCategory() {

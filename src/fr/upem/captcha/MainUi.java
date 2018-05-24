@@ -50,9 +50,7 @@ public class MainUi {
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
 		//CaptchaManager cm = new CaptchaManager();
-		
-		System.out.println(captchaManager.getAllCategories().get(0).getClass().getSimpleName());
-		
+				
 		Dresseur o = new Dresseur();
 		ArrayList<URL> list = o.getPhotos();
 		for (URL url: list) {
