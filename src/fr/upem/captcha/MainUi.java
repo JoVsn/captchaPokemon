@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import  fr.upem.captcha.images.dresseur.Dresseur;
@@ -62,18 +63,26 @@ public class MainUi {
 		
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
-		frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
+		//frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
+		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : " + captchaManager.getCategory().getClass().getSimpleName()));
 		
 		frame.add(okButton);
 		
 		frame.setVisible(true);
 	}
 	
-	
+	/**
+	 * Creates the grid layout
+	 * @return grid layout
+	 */
 	private static GridLayout createLayout(){
 		return new GridLayout(4,3);
 	}
 	
+	/**
+	 * Creates ok button and checks results
+	 * @return
+	 */
 	private static JButton createOkButton(){
 		return new JButton(new AbstractAction("Vérifier") { //ajouter l'action du bouton
 			
@@ -88,15 +97,15 @@ public class MainUi {
 						System.out.println(selectedImages.size());
 						if (selectedImages.size() == captchaManager.getValidList().size()) {
 							if (captchaManager.compareLists(selectedImages)) {
-								//Sélection validée
 								System.out.println("Sélection correcte\n omedeto gozaimasu~");
+								ShowOptionPane("Sélection correcte\n Omedeto gozaimasu~", "Information");
 							} else {
-								//Sélection incorrecte, relancer processus
 								System.out.println("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++");
+								ShowOptionPane("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++", "Error");
 							}
 						} else {
-							//Sélection incorrecte, relancer processus
 							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
+							ShowOptionPane("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++", "Warning");
 						}
 					}
 				});
@@ -104,6 +113,34 @@ public class MainUi {
 		});
 	}
 	
+	/**
+	 * Display an option pane
+	 * @param String message
+	 * @param String type
+	 */
+	private static void ShowOptionPane(String message, String type) {
+		JOptionPane jop = new JOptionPane();
+		switch(type) {
+		case "Information":
+			jop.showMessageDialog(null, message, type, JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case "Warning":
+			jop.showMessageDialog(null, message, type, JOptionPane.WARNING_MESSAGE);
+			break;
+		case "Error":
+			jop.showMessageDialog(null, message, type, JOptionPane.ERROR_MESSAGE);
+			break;
+		default:
+			jop.showMessageDialog(null, message, type, JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	/**
+	 * Image processing
+	 * @param imageLocation
+	 * @return JLabel
+	 * @throws IOException
+	 */
 	private static JLabel createLabelImage(String imageLocation) throws IOException{
 		
 		final URL url = MainUi.class.getResource(imageLocation); //Aller chercher les images !! IMPORTANT 
@@ -138,6 +175,10 @@ public class MainUi {
 				
 			}
 			
+			
+			/**
+			 * Creates interactions on click
+			 */
 			@Override
 			public void mouseClicked(MouseEvent arg0) { //ce qui nous intéresse c'est lorsqu'on clique sur une image, il y a donc des choses à faire ici
 				EventQueue.invokeLater(new Runnable() { 

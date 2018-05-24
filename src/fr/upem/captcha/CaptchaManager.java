@@ -42,6 +42,13 @@ public class CaptchaManager {
 		}
 	}
 	
+	/**
+	 * Fills the categories by browsing through the folders
+	 * @param int difficulty
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	public void fillCategories(int difficulty) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		String dirPath = this.getClass().getPackage().getName();
 		dirPath = dirPath.replace(".", "/");
@@ -93,9 +100,10 @@ public class CaptchaManager {
 			System.out.println("Erreur : " + e.getMessage());
 		}
 	}
+	
 	/**
-	 * Compare deux listes de même taille
-	 * @param selectedImages
+	 * Compares two Array lists of the same size
+	 * @param ArrayList<URL> selectedImages
 	 * @return boolean
 	 */
 	public boolean compareLists(ArrayList<URL> selectedImages) {
@@ -111,6 +119,9 @@ public class CaptchaManager {
 		return ctrl;
 	}
 
+	/**
+	 * Chooses a category randomly
+	 */
 	public void chooseCategory() {
 		int nbCategories = allCategories.size();
 		if (nbCategories >= 2) {
@@ -123,6 +134,9 @@ public class CaptchaManager {
 		}
 	}
 	
+	/**
+	 * Fills the valid list randomly
+	 */
 	public void fillValidList() {
 		Random randomno = new Random();
 		int nbImagesOk = randomno.nextInt(3) + 1; // On sélectionne entre 1 et 3 images
