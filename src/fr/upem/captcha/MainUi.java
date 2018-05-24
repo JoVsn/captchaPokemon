@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import  fr.upem.captcha.images.dresseur.Dresseur;
 import fr.upem.captcha.images.pokemon.Pokemon;
@@ -34,10 +35,11 @@ public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	private static CaptchaManager captchaManager = new CaptchaManager();
+	private static JFrame frame = new JFrame("Capcha");
 	
 	public static void main(String[] args) throws IOException {
 		
-		JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
+		//JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 		
 		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 		
@@ -54,9 +56,6 @@ public class MainUi {
 		
 		Pokemon pok = new Pokemon();
 		pok.getPhotos();
-
-		
-		//CaptchaManager cm = new CaptchaManager();
 				
 		List<URL> list = captchaManager.getFullList();
 		//List<URL> list = captchaManager.getValidList();
@@ -66,7 +65,6 @@ public class MainUi {
 		
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
-		//frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
 		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : " + captchaManager.getCategory().getClass().getSimpleName()));
 		
 		frame.add(okButton);
@@ -105,10 +103,14 @@ public class MainUi {
 							} else {
 								System.out.println("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++");
 								ShowOptionPane("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++", "Error");
+								captchaManager.restart();
+								
 							}
 						} else {
 							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
 							ShowOptionPane("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++", "Warning");
+							captchaManager.restart();
+							frame.update(g);
 						}
 					}
 				});

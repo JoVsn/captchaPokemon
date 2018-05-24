@@ -47,6 +47,22 @@ public class CaptchaManager {
 		}
 	}
 	
+	public void restart() {
+		this.validList = new ArrayList<URL>();
+		this.fullList = new ArrayList<URL>();
+		this.allCategories = new ArrayList<Images>();
+		
+		try {
+			fillCategories(difficulty);
+			chooseCategory();
+			fillValidList();
+			fillFullList();
+		}
+		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalStateException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	/**
 	 * Fills the categories by browsing through the folders
 	 * @param int difficulty
