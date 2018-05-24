@@ -66,6 +66,8 @@ public abstract class Category implements Images{
 			URL tmp = photos.get(tmpIndex);
 			if (!newList.contains(tmp))
 				newList.add(tmp);
+			else
+				i--;
 		}
 		
 		return newList;

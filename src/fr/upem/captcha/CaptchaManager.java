@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,21 +22,22 @@ import fr.upem.captcha.images.Images;
  */
 public class CaptchaManager {
 	private Images category;
-	private ArrayList<Images> allCategories;
-	private ArrayList<URL> validList;
-	private ArrayList<URL> fullList;
+	private List<Images> allCategories;
+	private List<URL> validList;
+	private List<URL> fullList;
 	
 	
 	CaptchaManager() {
-		this.category = category;
 		this.validList = new ArrayList<URL>();
 		this.fullList = new ArrayList<URL>();
 		this.allCategories = new ArrayList<Images>();
 		
 		try {
 			fillCategories(2);
+			chooseCategory();
+			fillValidList();
 		}
-		catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalStateException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -92,24 +94,44 @@ public class CaptchaManager {
 		}
 	}
 	
-	/**
-	 * Utiliser le Forname
-	 * @return
-	 */
+	public void chooseCategory() {
+		int nbCategories = allCategories.size();
 
+		if (nbCategories >= 2) {
+			Random randomno = new Random();
+			int index = randomno.nextInt(nbCategories);
+			category = allCategories.get(index);
+		}
+		else {
+			throw new IllegalStateException("Il n'y a pas assez de catégories pour créer le captcha");
+		}
+	}
+	
+	public void fillValidList() {
+		Random randomno = new Random();
+		int nbImagesOk = randomno.nextInt(3) + 1; // On sélectionne entre 1 et 3 images
+
+		validList = category.getRandomPhotosURL(nbImagesOk);
+		System.out.println(nbImagesOk);
+		System.out.println(validList.size());
+		
+		System.out.println(validList);
+		
+	}
+	
 	public Images getCategory() {
 		return category;
 	}
 
-	public ArrayList<URL> getValidList() {
+	public List<URL> getValidList() {
 		return validList;
 	}
 
-	public ArrayList<URL> getFullList() {
+	public List<URL> getFullList() {
 		return fullList;
 	}
 
-	public ArrayList<Images> getAllCategories() {
+	public List<Images> getAllCategories() {
 		return allCategories;
 	}
 	
