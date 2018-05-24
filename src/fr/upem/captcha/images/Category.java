@@ -22,7 +22,7 @@ public abstract class Category implements Images{
 		ArrayList<URL> newList = new ArrayList<URL>();
 		
 		// On récupère le répertoire courant
-		String dirPath = this.getClass().getPackageName();
+		String dirPath = this.getClass().getPackage().getName();
 		dirPath = dirPath.replace(".", "/");
 				
 		List<String> files = new ArrayList<String>();
@@ -83,7 +83,7 @@ public abstract class Category implements Images{
 	 * Précise si une photo appartient bien à notre catégorie
 	 */
 	public boolean isPhotoCorrect(URL url) {
-		String categorieName = this.getClass().getPackageName().toLowerCase();
+		String categorieName = this.getClass().getPackage().getName().toLowerCase();
 		return url.toString().toLowerCase().contains(categorieName);
 	}
 }

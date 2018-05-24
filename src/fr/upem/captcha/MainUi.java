@@ -48,16 +48,20 @@ public class MainUi {
 
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
+		CaptchaManager cm = new CaptchaManager();
+		
+		System.out.println(cm.getAllCategories().get(0).getClass().getSimpleName());
+		
 		Dresseur o = new Dresseur();
 		ArrayList<URL> list = o.getPhotos();
 		for (URL url: list) {
 			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
 		}
 		
+		
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
 		frame.add(new JTextArea("Cliquez n'importe où ... juste pour tester l'interface !"));
-		
 		
 		frame.add(okButton);
 		
