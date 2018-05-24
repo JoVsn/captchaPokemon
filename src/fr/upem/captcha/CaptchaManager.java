@@ -150,23 +150,35 @@ public class CaptchaManager {
 		
 	}
 	
+	/**
+	 * Get the category
+	 * @return Images
+	 */
 	public Images getCategory() {
 		return category;
 	}
 
+	/**
+	 * Get the valid list
+	 * @return List<URL>
+	 */
 	public List<URL> getValidList() {
 		return validList;
 	}
 
+	/**
+	 * Get the full list
+	 * @return List<URL>
+	 */
 	public List<URL> getFullList() {
 		return fullList;
 	}
 
+	/**
+	 * Get all categories
+	 * @return List<Images>
+	 */
 	public List<Images> getAllCategories() {
 		return allCategories;
-	}
-	
-	
-	
-	
+	}	
 }
