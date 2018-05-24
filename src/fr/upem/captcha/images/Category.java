@@ -30,7 +30,7 @@ public abstract class Category implements Images{
 		
 		try {
 			// On parcourt tous les fichiers du répertoire courant, mais aussi des sous-répertoires
-			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath),1);
+			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath));
 		    files = paths
 		    	.map(Path::toString)
 		        .filter(elem -> (elem.contains(".jpg") || elem.contains(".png"))) // On ne récupère que les images
@@ -38,10 +38,21 @@ public abstract class Category implements Images{
 			
 		    // Enfin, on ajoute les images à notre liste d'images
 			for (String file: files) {
-				String[] tmpTab = file.split("fr\\\\upem\\\\captcha\\\\images\\\\" + this.getClass().getSimpleName().toLowerCase() + "\\\\");
-				String tmp = tmpTab[tmpTab.length-1];
-				//if (tmp.contains("\\"))
-					//tmp = "\\" + tmp;
+				//String[] tmpTab = file.split("fr\\\\upem\\\\captcha\\\\images\\\\" + this.getClass().getSimpleName().toLowerCase() + "\\\\");
+				
+				// On récupère la partie interessante de l'URL
+				String[] tmpTab = file.split("fr\\\\upem\\\\captcha\\\\images\\\\");
+				StringBuilder stb = new StringBuilder();
+				for (int i = 1; i < tmpTab.length; i++) {
+					stb.append(tmpTab[i]);
+				}
+				String tmp = stb.toString();
+				tmpTab = tmp.split(this.getClass().getSimpleName().toLowerCase());
+				// On retire du chemin tout ce qu'il y avant le nom de la categorie actuelle 
+				tmp = tmpTab[tmpTab.length-1];
+				tmp = tmp.substring(1, tmp.length());
+				tmp = tmp.replace("\\", "/");
+				
 				newList.add(this.getClass().getResource(tmp));
 			}
 		} 
@@ -66,7 +77,6 @@ public abstract class Category implements Images{
 		// On récupère un nombre d'images prises au hasard dans notre liste d'images
 		for (int i = 0; i < n; i++) {
 			int tmpIndex = randomno.nextInt(photos.size());
-			System.out.println("Nombre de photos : " + photos.size() + ", Index TMP : " + tmpIndex);
 			URL tmp = photos.get(tmpIndex);
 			if (!newList.contains(tmp))
 				newList.add(tmp);
@@ -82,8 +92,6 @@ public abstract class Category implements Images{
 	 */
 	public URL getRandomPhotoURL() {
 		URL newURL = getRandomPhotosURL(1).get(0);
-		System.out.println("//////// \n" + getPhotos() + "\n ///////");
-		System.out.println("Random URL ; " + newURL.toString());
 		return newURL;
 	}
 	

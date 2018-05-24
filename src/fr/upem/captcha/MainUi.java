@@ -96,8 +96,10 @@ public class MainUi {
 					@Override
 					public void run() { // c'est un runnable
 						System.out.println("J'ai cliqué sur Ok");
-						System.out.println(captchaManager.getValidList().size());
-						System.out.println(selectedImages.size());
+						System.out.println("Nb d'images valides: " + captchaManager.getValidList().size());
+						System.out.println("Nb d'images cliquées: " + selectedImages.size());
+						System.out.println("Images valides: " + captchaManager.getValidList());
+						System.out.println("Images cliquées: " + selectedImages);
 						if (selectedImages.size() == captchaManager.getValidList().size()) {
 							if (captchaManager.compareLists(selectedImages)) {
 								System.out.println("Sélection correcte\n omedeto gozaimasu~");

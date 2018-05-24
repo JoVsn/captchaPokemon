@@ -28,7 +28,7 @@ public class CaptchaManager {
 	private List<URL> validList;
 	private List<URL> fullList;
 	private int maxImg = 9;
-	private int difficulty = 2;
+	private int difficulty = 3;
 	
 	
 	CaptchaManager() {
@@ -161,10 +161,18 @@ public class CaptchaManager {
 		}
 		
 		// On récupère toutes les autres catégories
-		List<Images> otherCategories = new ArrayList<Images>(allCategories);
-		otherCategories.remove(category);
-		for(Images i: otherCategories) {
-			System.out.println("Autre catégorie: " + i.getClass().getSimpleName());
+		List<Images> otherCategories = new ArrayList<Images>();
+		for(Images i: allCategories) {
+			boolean contains = i.getClass().getPackage().getName().contains(category.getClass().getPackage().getName());
+			boolean equals = i.getClass().getPackage().getName().equals(category.getClass().getPackage().getName());
+			if (!equals && !contains) {
+				otherCategories.add(i);
+				System.out.println("/////////");
+				System.out.println("Autre catégorie: " + i.getClass().getSimpleName());
+				System.out.println(i.getClass().getPackage().getName());
+				System.out.println(category.getClass().getPackage().getName());
+				System.out.println("/////////");
+			}
 		}
 		
 		// On remplit la liste complète avec des images d'autres catégories
