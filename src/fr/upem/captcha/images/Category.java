@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
  *
  */
 public abstract class Category implements Images{
-
+	
 	public ArrayList<URL> getPhotos() {
 		ArrayList<URL> newList = new ArrayList<URL>();
 		
@@ -29,7 +30,7 @@ public abstract class Category implements Images{
 		
 		try {
 			// On parcourt tous les fichiers du répertoire courant, mais aussi des sous-répertoires
-			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath));
+			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath),1);
 		    files = paths
 		    	.map(Path::toString)
 		        .filter(elem -> (elem.contains(".jpg") || elem.contains(".png"))) // On ne récupère que les images
@@ -37,8 +38,10 @@ public abstract class Category implements Images{
 			
 		    // Enfin, on ajoute les images à notre liste d'images
 			for (String file: files) {
-				String[] tmpTab = file.split("\\\\");
+				String[] tmpTab = file.split("fr\\\\upem\\\\captcha\\\\images\\\\" + this.getClass().getSimpleName().toLowerCase() + "\\\\");
 				String tmp = tmpTab[tmpTab.length-1];
+				//if (tmp.contains("\\"))
+					//tmp = "\\" + tmp;
 				newList.add(this.getClass().getResource(tmp));
 			}
 		} 
@@ -63,6 +66,7 @@ public abstract class Category implements Images{
 		// On récupère un nombre d'images prises au hasard dans notre liste d'images
 		for (int i = 0; i < n; i++) {
 			int tmpIndex = randomno.nextInt(photos.size());
+			System.out.println("Nombre de photos : " + photos.size() + ", Index TMP : " + tmpIndex);
 			URL tmp = photos.get(tmpIndex);
 			if (!newList.contains(tmp))
 				newList.add(tmp);
@@ -78,6 +82,8 @@ public abstract class Category implements Images{
 	 */
 	public URL getRandomPhotoURL() {
 		URL newURL = getRandomPhotosURL(1).get(0);
+		System.out.println("//////// \n" + getPhotos() + "\n ///////");
+		System.out.println("Random URL ; " + newURL.toString());
 		return newURL;
 	}
 	

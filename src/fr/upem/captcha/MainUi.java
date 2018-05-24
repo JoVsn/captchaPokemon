@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 import  fr.upem.captcha.images.dresseur.Dresseur;
+import fr.upem.captcha.images.pokemon.Pokemon;
 
 /**
  * @author Alexane LE GUERN, Jordan VILSAINT
@@ -49,14 +51,17 @@ public class MainUi {
 
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
+		Pokemon pok = new Pokemon();
+		pok.getPhotos();
+
+		
 		//CaptchaManager cm = new CaptchaManager();
 				
-		Dresseur o = new Dresseur();
-		ArrayList<URL> list = o.getPhotos();
+		List<URL> list = captchaManager.getFullList();
+		//List<URL> list = captchaManager.getValidList();
 		for (URL url: list) {
 			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
-		}
-		
+		}	
 		
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
@@ -82,7 +87,7 @@ public class MainUi {
 					@Override
 					public void run() { // c'est un runnable
 						System.out.println("J'ai cliqué sur Ok");
-						System.out.println(captchaManager.getValidList().size());
+						/*System.out.println(captchaManager.getValidList().size());
 						System.out.println(selectedImages.size());
 						if (selectedImages.size() == captchaManager.getValidList().size()) {
 							if (captchaManager.compareLists(selectedImages)) {
@@ -95,7 +100,7 @@ public class MainUi {
 						} else {
 							//Sélection incorrecte, relancer processus
 							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
-						}
+						}*/
 					}
 				});
 			}

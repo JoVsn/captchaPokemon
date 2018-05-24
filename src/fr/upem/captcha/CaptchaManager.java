@@ -38,6 +38,7 @@ public class CaptchaManager {
 			fillCategories(difficulty);
 			chooseCategory();
 			fillValidList();
+			fillFullList();
 		}
 		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalStateException e) {
 			System.out.println(e.getMessage());
@@ -138,14 +139,29 @@ public class CaptchaManager {
 	}
 	
 	public void fillFullList() {
+		// On ajoute la liste d'éléments valides à la liste complète
 		for (int i = 0; i < validList.size(); i++) {
 			fullList.add(validList.get(i));
 		}
+		
+		// On récupère toutes les autres catégories
+		List<Images> otherCategories = new ArrayList<Images>(allCategories);
+		otherCategories.remove(category);
+		for(Images i: otherCategories) {
+			System.out.println("Autre catégorie: " + i.getClass().getSimpleName());
+		}
+		
+		// On remplit la liste complète avec des images d'autres catégories
 		int j = fullList.size();
 		Random randomno = new Random();
 		while (j < maxImg) {
-			int tmpIndex = randomno.nextInt(allCategories.size()-1);
-			Images tmpCategory = allCategories.get(tmpIndex);
+			int tmpIndex = randomno.nextInt(otherCategories.size());
+			Images tmpCategory = otherCategories.get(tmpIndex);
+			URL newUrl = tmpCategory.getRandomPhotoURL();
+			if (!fullList.contains(newUrl)) {
+				fullList.add(newUrl);
+				j++;
+			}
 		}
 	}
 	
