@@ -93,10 +93,25 @@ public class CaptchaManager {
 			System.out.println("Erreur : " + e.getMessage());
 		}
 	}
-	
+	/**
+	 * Compare deux listes de même taille
+	 * @param selectedImages
+	 * @return boolean
+	 */
+	public boolean compareLists(ArrayList<URL> selectedImages) {
+		boolean ctrl = false;
+		for (int i = 0; i < this.validList.size(); ++i) {
+			if (selectedImages.contains(this.validList.get(i))) {
+				ctrl = true;
+			} else {
+				return false;
+			}
+		}
+		return ctrl;
+	}
+
 	public void chooseCategory() {
 		int nbCategories = allCategories.size();
-
 		if (nbCategories >= 2) {
 			Random randomno = new Random();
 			int index = randomno.nextInt(nbCategories);
@@ -111,11 +126,12 @@ public class CaptchaManager {
 		Random randomno = new Random();
 		int nbImagesOk = randomno.nextInt(3) + 1; // On sélectionne entre 1 et 3 images
 
-		validList = category.getRandomPhotosURL(nbImagesOk);
-		System.out.println(nbImagesOk);
-		System.out.println(validList.size());
-		
-		System.out.println(validList);
+		try {
+			validList = category.getRandomPhotosURL(nbImagesOk);
+		}
+		catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
