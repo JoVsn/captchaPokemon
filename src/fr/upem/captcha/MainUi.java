@@ -30,6 +30,7 @@ import  fr.upem.captcha.images.dresseur.Dresseur;
 public class MainUi {
 	
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
+	private static CaptchaManager captchaManager = new CaptchaManager();
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -48,9 +49,9 @@ public class MainUi {
 
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
-		CaptchaManager cm = new CaptchaManager();
+		//CaptchaManager cm = new CaptchaManager();
 		
-		System.out.println(cm.getAllCategories().get(0).getClass().getSimpleName());
+		System.out.println(captchaManager.getAllCategories().get(0).getClass().getSimpleName());
 		
 		Dresseur o = new Dresseur();
 		ArrayList<URL> list = o.getPhotos();
@@ -83,6 +84,20 @@ public class MainUi {
 					@Override
 					public void run() { // c'est un runnable
 						System.out.println("J'ai cliqué sur Ok");
+						System.out.println(captchaManager.getValidList().size());
+						System.out.println(selectedImages.size());
+						if (selectedImages.size() == captchaManager.getValidList().size()) {
+							if (captchaManager.compareLists(selectedImages)) {
+								//Sélection validée
+								System.out.println("Sélection correcte\n omedeto gozaimasu~");
+							} else {
+								//Sélection incorrecte, relancer processus
+								System.out.println("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++");
+							}
+						} else {
+							//Sélection incorrecte, relancer processus
+							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
+						}
 					}
 				});
 			}

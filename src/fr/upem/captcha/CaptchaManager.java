@@ -93,6 +93,23 @@ public class CaptchaManager {
 	}
 	
 	/**
+	 * Compare deux listes de même taille
+	 * @param selectedImages
+	 * @return boolean
+	 */
+	public boolean compareLists(ArrayList<URL> selectedImages) {
+		boolean ctrl = false;
+		for (int i = 0; i < this.validList.size(); ++i) {
+			if (selectedImages.contains(this.validList.get(i))) {
+				ctrl = true;
+			} else {
+				return false;
+			}
+		}
+		return ctrl;
+	}
+	
+	/**
 	 * Utiliser le Forname
 	 * @return
 	 */
