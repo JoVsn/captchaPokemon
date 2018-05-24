@@ -55,6 +55,10 @@ public class CaptchaManager {
 	 * @throws IllegalAccessException
 	 */
 	public void fillCategories(int difficulty) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		if (difficulty < 1) {
+			throw new IllegalArgumentException("La difficulté doit au moins être à 2");
+		}
+		
 		String dirPath = this.getClass().getPackage().getName();
 		dirPath = dirPath.replace(".", "/");
 		String basePath = ".\\src\\fr\\upem\\captcha\\images\\";
@@ -118,7 +122,6 @@ public class CaptchaManager {
 	public boolean compareLists(ArrayList<URL> selectedImages) {
 		boolean ctrl = false;
 		for (int i = 0; i < this.validList.size(); ++i) {
-			System.out.println(this.validList.get(i));
 			if (selectedImages.contains(this.validList.get(i))) {
 				ctrl = true;
 			} else {
@@ -131,7 +134,7 @@ public class CaptchaManager {
 	/**
 	 * Chooses a category randomly
 	 */
-	public void chooseCategory() {
+	public void chooseCategory() throws IllegalStateException {
 		int nbCategories = allCategories.size();
 		if (nbCategories >= 2) {
 			Random randomno = new Random();

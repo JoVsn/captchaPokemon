@@ -65,7 +65,7 @@ public abstract class Category implements Images{
 	/**
 	 * Retourne une liste de photo aléatoire
 	 */
-	public List<URL> getRandomPhotosURL(int n) {
+	public List<URL> getRandomPhotosURL(int n) throws IllegalStateException, IllegalArgumentException {
 		ArrayList<URL> photos = getPhotos();
 		ArrayList<URL> newList = new ArrayList<URL>();
 		Random randomno = new Random();
