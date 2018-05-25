@@ -90,17 +90,20 @@ public class MainUi {
 								System.out.println("Sélection correcte\n omedeto gozaimasu~");
 								ShowOptionPane("Sélection correcte\n Omedeto gozaimasu~", "Information");
 								captchaManager.restart();
+								selectedImages.clear();
 								reloadJFrame();
 							} else {
 								System.out.println("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++");
 								ShowOptionPane("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++", "Error");
 								captchaManager.restart();
+								selectedImages.clear();
 								reloadJFrame();
 							}
 						} else {
 							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
 							ShowOptionPane("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++", "Warning");
 							captchaManager.restart();
+							selectedImages.clear();
 							reloadJFrame();
 						}
 					}

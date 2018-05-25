@@ -47,7 +47,9 @@ public class CaptchaManager {
 		}
 	}
 	
-	public void restart() {		
+	public void restart() {	
+		validList.clear();
+		fullList.clear();
 		try {
 			fillCategories(difficulty);
 			chooseCategory();
