@@ -25,9 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import  fr.upem.captcha.images.dresseur.Dresseur;
-import fr.upem.captcha.images.pokemon.Pokemon;
-
 /**
  * @author Alexane LE GUERN, Jordan VILSAINT
  *
@@ -40,11 +37,6 @@ public class MainUi {
 	private static GridLayout layout = createLayout();
 	
 	public static void main(String[] args) throws IOException {
-		
-		//JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
-		
-		//GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
-		
 		frame.setLayout(layout);  // affection du layout dans la fenêtre.
 		frame.setSize(1024, 768); // définition de la taille
 		frame.setResizable(false);  // On définit la fenêtre comme non redimentionnable
@@ -53,18 +45,12 @@ public class MainUi {
 		 
 		
 		JButton okButton = createOkButton();
-
-		/* NE PAS SUPPRIMER CES LIGNES */
-		
-		Pokemon pok = new Pokemon();
-		pok.getPhotos();
 				
+		// Récupération des données et création du Captcha
 		List<URL> list = captchaManager.getFullList();
 		for (URL url: list) {
 			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
-		}	
-		
-		/* NE PAS SUPPRIMER CES LIGNES */
+		}
 		
 		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getClass().getSimpleName()));
 		
