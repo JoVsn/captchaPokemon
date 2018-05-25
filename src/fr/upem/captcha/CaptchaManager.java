@@ -25,7 +25,7 @@ public class CaptchaManager {
 	private List<URL> validList;
 	private List<URL> fullList;
 	private int maxImg = 9;
-	private int difficulty = 3;
+	private int difficulty = 1;
 	
 	CaptchaManager() {
 		this.validList = new ArrayList<URL>();
@@ -69,7 +69,7 @@ public class CaptchaManager {
 		
 		try {
 			// On parcourt tous les fichiers du répertoire courant, mais aussi des sous-répertoires
-			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath), difficulty);
+			Stream<Path> paths = Files.walk(Paths.get("./src/" + dirPath), difficulty+1);
 		    filesPaths = paths
 		    		.map(Path::toString)
 		    		.filter(elem -> elem.contains(basePath))
