@@ -25,7 +25,7 @@ public class CaptchaManager {
 	private List<URL> validList;
 	private List<URL> fullList;
 	private int maxImg = 9;
-	private int difficulty = 2;
+	private int difficulty = 3;
 	
 	CaptchaManager() {
 		this.validList = new ArrayList<URL>();
