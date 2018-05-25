@@ -95,6 +95,7 @@ public class MainUi {
 							} else {
 								System.out.println("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++");
 								ShowOptionPane("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++", "Error");
+								captchaManager.increaseDifficulty();
 								captchaManager.restart();
 								selectedImages.clear();
 								reloadJFrame();
@@ -102,6 +103,7 @@ public class MainUi {
 						} else {
 							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
 							ShowOptionPane("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++", "Warning");
+							captchaManager.increaseDifficulty();
 							captchaManager.restart();
 							selectedImages.clear();
 							reloadJFrame();
