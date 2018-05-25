@@ -42,7 +42,7 @@ public class CaptchaManager {
 			fillValidList();
 			fillFullList();
 		}
-		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalStateException e) {
+		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalArgumentException | IllegalStateException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -56,7 +56,7 @@ public class CaptchaManager {
 			fillValidList();
 			fillFullList();
 		}
-		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalStateException e) {
+		catch (ClassNotFoundException | IllegalAccessException | InstantiationException | IllegalArgumentException | IllegalStateException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -64,11 +64,11 @@ public class CaptchaManager {
 	/**
 	 * Fills the categories by browsing through the folders
 	 * @param int difficulty
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException lance l'exception ClassNotFoundException
+	 * @throws InstantiationException lance l'exception InstantiationException
+	 * @throws IllegalAccessException lance l'exception IllegalAccessException
 	 */
-	public void fillCategories(int difficulty) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public void fillCategories(int difficulty) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException {
 		if (difficulty < 1) {
 			throw new IllegalArgumentException("La difficulté doit au moins être à 2");
 		}
@@ -90,6 +90,7 @@ public class CaptchaManager {
 		    		.collect(Collectors.toList());
 		    paths.close();
 		    
+		    // On récupère toutes les catégories existantes à partir des noms de packages
 		    for (String path: filesPaths) {
 		    	File tmp = new File(path);
 		    	if (tmp.isDirectory()) {
@@ -105,7 +106,7 @@ public class CaptchaManager {
 		    	}
 		    }
 		    
-		    // On crée une liste de classe
+		    // On crée une liste de classe, une pour chaque catégorie
 		    for (String className: categoriesName) {
 		    	try {
 		    		Class<?> newClass = Class.forName(className);
@@ -176,7 +177,7 @@ public class CaptchaManager {
 	}
 	
 	/**
-	 * Fills the reste of the list of images
+	 * Fills the rest of the list of images
 	 */
 	public void fillFullList() {
 		// On ajoute la liste d'éléments valides à la liste complète
@@ -189,6 +190,7 @@ public class CaptchaManager {
 		for(Images i: allCategories) {
 			boolean contains = i.getClass().getPackage().getName().contains(category.getClass().getPackage().getName());
 			boolean equals = i.getClass().getPackage().getName().equals(category.getClass().getPackage().getName());
+			// Si la catégorie n'est pas la fille de la catégorie déjà selectionnée, on ne la rajoute pas dans la liste des autres catégories
 			if (!equals && !contains) {
 				otherCategories.add(i);
 			}
@@ -211,6 +213,9 @@ public class CaptchaManager {
 		Collections.shuffle(fullList);
 	}
 	
+	/**
+	 * Increase the difficulty attribute by 1
+	 */
 	public void increaseDifficulty() {
 		difficulty++;
 	}
