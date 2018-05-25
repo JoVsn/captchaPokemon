@@ -47,11 +47,7 @@ public class CaptchaManager {
 		}
 	}
 	
-	public void restart() {
-		this.validList = new ArrayList<URL>();
-		this.fullList = new ArrayList<URL>();
-		this.allCategories = new ArrayList<Images>();
-		
+	public void restart() {		
 		try {
 			fillCategories(difficulty);
 			chooseCategory();

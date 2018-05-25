@@ -1,6 +1,7 @@
 package fr.upem.captcha;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -36,12 +37,13 @@ public class MainUi {
 	private static ArrayList<URL> selectedImages = new ArrayList<URL>();
 	private static CaptchaManager captchaManager = new CaptchaManager();
 	private static JFrame frame = new JFrame("Capcha");
+	private static GridLayout layout = createLayout();
 	
 	public static void main(String[] args) throws IOException {
 		
 		//JFrame frame = new JFrame("Capcha"); // Création de la fenêtre principale
 		
-		GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
+		//GridLayout layout = createLayout();  // Création d'un layout de type Grille avec 4 lignes et 3 colonnes
 		
 		frame.setLayout(layout);  // affection du layout dans la fenêtre.
 		frame.setSize(1024, 768); // définition de la taille
@@ -58,14 +60,13 @@ public class MainUi {
 		pok.getPhotos();
 				
 		List<URL> list = captchaManager.getFullList();
-		//List<URL> list = captchaManager.getValidList();
 		for (URL url: list) {
 			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
 		}	
 		
 		/* NE PAS SUPPRIMER CES LIGNES */
 		
-		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : " + captchaManager.getCategory().getClass().getSimpleName()));
+		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getClass().getSimpleName()));
 		
 		frame.add(okButton);
 		
@@ -102,22 +103,64 @@ public class MainUi {
 							if (captchaManager.compareLists(selectedImages)) {
 								System.out.println("Sélection correcte\n omedeto gozaimasu~");
 								ShowOptionPane("Sélection correcte\n Omedeto gozaimasu~", "Information");
+								captchaManager.restart();
+								reloadJFrame();
 							} else {
 								System.out.println("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++");
 								ShowOptionPane("Sélection incorrecte\n prêt à relancer un captcha\n difficulté++", "Error");
 								captchaManager.restart();
-								
+								reloadJFrame();
 							}
 						} else {
 							System.out.println("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++");
 							ShowOptionPane("Vous avez sélectionné trop, ou pas assez d'images\n prêt à relancer un captcha\n difficulté++", "Warning");
 							captchaManager.restart();
-							frame.update(g);
+							reloadJFrame();
 						}
 					}
 				});
 			}
 		});
+	}
+	
+	private static void reloadJFrame() {
+		/*Component[] components = frame.getContentPane().getComponents();
+		for (int i=0; i<11; ++i) {
+			//System.out.println(frame.getContentPane().getComponent(i));
+			//frame.remove(frame.getContentPane().getComponent(i));
+			frame.remove(components[i]);
+		}*/
+		
+		frame.dispose();
+		frame = new JFrame("Capcha");
+		frame.setLayout(layout);  // affection du layout dans la fenêtre.
+		frame.setSize(1024, 768); // définition de la taille
+		frame.setResizable(false);  // On définit la fenêtre comme non redimentionnable
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Lorsque l'on ferme la fenêtre on quitte le programme.
+		
+		List<URL> list = captchaManager.getFullList();
+		for (URL url: list) {
+			try {
+				frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		SwingUtilities.updateComponentTreeUI(frame);
+		JButton okButton = createOkButton();
+		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getClass().getSimpleName()));	
+		frame.add(okButton);
+		frame.setVisible(true);
+		
+		//frame.revalidate();
+		//frame.repaint();
+		/*frame.invalidate();
+		frame.validate();
+		frame.repaint();*/
+		/*frame.revalidate();
+		frame.repaint();*/
+		//layout.removeLayoutComponent();
 	}
 	
 	/**
