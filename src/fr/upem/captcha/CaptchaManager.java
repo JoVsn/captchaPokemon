@@ -35,6 +35,9 @@ public class CaptchaManager {
 		initializeDatas();
 	}
 	
+	/**
+	 * Initializes datas of the lists depending on the choosen category
+	 */
 	public void initializeDatas() {
 		try {
 			fillCategories(difficulty);
@@ -47,6 +50,9 @@ public class CaptchaManager {
 		}
 	}
 	
+	/**
+	 * Restarts the captcha's datas, clears then initializes lists
+	 */
 	public void restart() {	
 		validList.clear();
 		fullList.clear();
@@ -63,10 +69,11 @@ public class CaptchaManager {
 	
 	/**
 	 * Fills the categories by browsing through the folders
-	 * @param int difficulty
-	 * @throws ClassNotFoundException lance l'exception ClassNotFoundException
-	 * @throws InstantiationException lance l'exception InstantiationException
-	 * @throws IllegalAccessException lance l'exception IllegalAccessException
+	 * @param difficulty The difficulty level
+	 * @throws ClassNotFoundException if the class is not found
+	 * @throws InstantiationException if the instance can not be created
+	 * @throws IllegalAccessException if access problem
+	 * @throws IllegalArgumentException if argument problem
 	 */
 	public void fillCategories(int difficulty) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException {
 		if (difficulty < 1) {
@@ -131,8 +138,8 @@ public class CaptchaManager {
 	
 	/**
 	 * Compares two Array lists of the same size
-	 * @param ArrayList<URL> selectedImages
-	 * @return boolean
+	 * @param selectedImages The list of images
+	 * @return A boolean, true if the lists are equal
 	 */
 	public boolean compareLists(ArrayList<URL> selectedImages) {
 		boolean ctrl = false;
@@ -148,6 +155,7 @@ public class CaptchaManager {
 
 	/**
 	 * Chooses a category randomly
+	 * @throws IllegalStateException if there are not enough categories
 	 */
 	public void chooseCategory() throws IllegalStateException {
 		int nbCategories = allCategories.size();
@@ -222,7 +230,7 @@ public class CaptchaManager {
 	
 	/**
 	 * Get the category
-	 * @return Images
+	 * @return An instance of Images
 	 */
 	public Images getCategory() {
 		return category;
@@ -230,7 +238,7 @@ public class CaptchaManager {
 
 	/**
 	 * Get the valid list of images
-	 * @return List<URL>
+	 * @return A list of url
 	 */
 	public List<URL> getValidList() {
 		return validList;
@@ -238,7 +246,7 @@ public class CaptchaManager {
 
 	/**
 	 * Get the full list of images
-	 * @return List<URL>
+	 * @return A list of url
 	 */
 	public List<URL> getFullList() {
 		return fullList;
@@ -246,7 +254,7 @@ public class CaptchaManager {
 
 	/**
 	 * Get all categories
-	 * @return List<Images>
+	 * @return A list of images
 	 */
 	public List<Images> getAllCategories() {
 		return allCategories;

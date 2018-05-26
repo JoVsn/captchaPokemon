@@ -61,7 +61,7 @@ public class MainUi {
 	
 	/**
 	 * Creates the grid layout
-	 * @return grid layout
+	 * @return The grid layout
 	 */
 	private static GridLayout createLayout(){
 		return new GridLayout(4,3);
@@ -114,14 +114,10 @@ public class MainUi {
 		});
 	}
 	
+	/**
+	 * Reload the frame
+	 */
 	private static void reloadJFrame() {
-		/*Component[] components = frame.getContentPane().getComponents();
-		for (int i=0; i<11; ++i) {
-			//System.out.println(frame.getContentPane().getComponent(i));
-			//frame.remove(frame.getContentPane().getComponent(i));
-			frame.remove(components[i]);
-		}*/
-		
 		frame.dispose();
 		frame = new JFrame("Capcha");
 		frame.setLayout(layout);  // affection du layout dans la fenêtre.
@@ -143,21 +139,12 @@ public class MainUi {
 		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getClass().getSimpleName()));	
 		frame.add(okButton);
 		frame.setVisible(true);
-		
-		//frame.revalidate();
-		//frame.repaint();
-		/*frame.invalidate();
-		frame.validate();
-		frame.repaint();*/
-		/*frame.revalidate();
-		frame.repaint();*/
-		//layout.removeLayoutComponent();
 	}
 	
 	/**
 	 * Display an option pane
-	 * @param String message
-	 * @param String type
+	 * @param message
+	 * @param type
 	 */
 	private static void ShowOptionPane(String message, String type) {
 		JOptionPane jop = new JOptionPane();
@@ -179,8 +166,8 @@ public class MainUi {
 	/**
 	 * Image processing
 	 * @param imageLocation
-	 * @return JLabel
-	 * @throws IOException
+	 * @return A label
+	 * @throws IOException if reading problem
 	 */
 	private static JLabel createLabelImage(String imageLocation) throws IOException{
 		
