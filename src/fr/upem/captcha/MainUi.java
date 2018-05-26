@@ -52,7 +52,7 @@ public class MainUi {
 			frame.add(createLabelImage(url.toString().replaceAll("(.*)/fr/upem/captcha/", "./")));
 		}
 		
-		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getClass().getSimpleName()));
+		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getCompleteName()));
 		
 		frame.add(okButton);
 		
@@ -81,10 +81,12 @@ public class MainUi {
 					@Override
 					public void run() { // c'est un runnable
 						System.out.println("J'ai cliqué sur Ok");
+						/* Pour les vérifications
 						System.out.println("Nb d'images valides: " + captchaManager.getValidList().size());
 						System.out.println("Nb d'images cliquées: " + selectedImages.size());
 						System.out.println("Images valides: " + captchaManager.getValidList());
 						System.out.println("Images cliquées: " + selectedImages);
+						*/
 						if (selectedImages.size() == captchaManager.getValidList().size()) {
 							if (captchaManager.compareLists(selectedImages)) {
 								System.out.println("Sélection correcte\n omedeto gozaimasu~");
@@ -136,7 +138,7 @@ public class MainUi {
 		
 		SwingUtilities.updateComponentTreeUI(frame);
 		JButton okButton = createOkButton();
-		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getClass().getSimpleName()));	
+		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getCompleteName()));	
 		frame.add(okButton);
 		frame.setVisible(true);
 	}

@@ -124,4 +124,24 @@ public abstract class Category implements Images{
 		String categorieName = this.getClass().getPackage().getName().toLowerCase();
 		return url.toString().replace("/", ".").toLowerCase().contains(categorieName);
 	}
+
+	
+	/**
+	 * Gives the complete name of the Category, e.g : the mother category name + the child category name
+	 * @return categoryName the full name of the category
+	 */
+	public String getCompleteName() {
+		// On ne garde que la partie intéressante
+		String categoryName = this.getClass().getPackage().getName().replace("fr.upem.captcha.images.", "");
+		String[] categoryNameTab = categoryName.split("\\.");
+		categoryName = "";
+		StringBuilder stb = new StringBuilder();
+		// On recrée le nom complet de la catégorie, proprement, avec des majuscules
+		for (int i = 0; i < categoryNameTab.length; i++) {
+			String tmp = categoryNameTab[i].substring(0, 1).toUpperCase() + categoryNameTab[i].substring(1, categoryNameTab[i].length());
+			categoryName = stb.append(tmp).append(" ").toString();
+		}
+		return categoryName;
+		
+	}
 }

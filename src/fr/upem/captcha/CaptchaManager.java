@@ -36,7 +36,7 @@ public class CaptchaManager {
 	}
 	
 	/**
-	 * Initializes datas of the lists depending on the choosen category
+	 * Initializes datas of the lists depending on the chosen category
 	 */
 	public void initializeDatas() {
 		try {
@@ -198,7 +198,7 @@ public class CaptchaManager {
 		for(Images i: allCategories) {
 			boolean contains = i.getClass().getPackage().getName().contains(category.getClass().getPackage().getName());
 			boolean equals = i.getClass().getPackage().getName().equals(category.getClass().getPackage().getName());
-			// Si la catégorie n'est pas la fille de la catégorie déjà selectionnée, on ne la rajoute pas dans la liste des autres catégories
+			// Si la catégorie est la fille de la catégorie déjà selectionnée, on ne la rajoute pas dans la liste des autres catégories
 			if (!equals && !contains) {
 				otherCategories.add(i);
 			}
