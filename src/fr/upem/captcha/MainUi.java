@@ -53,6 +53,7 @@ public class MainUi {
 		}
 		
 		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getCompleteName()));
+		//+ "\n" + captchaManager.getCategory().getClass().getSimpleName()
 		
 		frame.add(okButton);
 		
@@ -138,7 +139,8 @@ public class MainUi {
 		
 		SwingUtilities.updateComponentTreeUI(frame);
 		JButton okButton = createOkButton();
-		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getCompleteName()));	
+		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : \n" + captchaManager.getCategory().getCompleteName()));
+		//+ "\n" + captchaManager.getCategory().getClass().getSimpleName()
 		frame.add(okButton);
 		frame.setVisible(true);
 	}

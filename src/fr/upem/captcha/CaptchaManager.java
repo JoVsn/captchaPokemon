@@ -179,7 +179,7 @@ public class CaptchaManager {
 		try {
 			validList = category.getRandomPhotosURL(nbImagesOk);
 		}
-		catch(IllegalArgumentException e) {
+		catch(IllegalArgumentException | IllegalStateException e) {
 			System.out.println(e.getMessage());
 		}
 	}
